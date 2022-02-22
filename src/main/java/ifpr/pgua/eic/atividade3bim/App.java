@@ -9,9 +9,12 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 
+import ifpr.pgua.eic.atividade3bim.daos.FakeAutenticacaoDAO;
 import ifpr.pgua.eic.atividade3bim.daos.FakeCarroDao;
+import ifpr.pgua.eic.atividade3bim.daos.interfaces.AutenticacaoDAO;
 import ifpr.pgua.eic.atividade3bim.daos.interfaces.CarroDAO;
 import ifpr.pgua.eic.atividade3bim.repositorios.RepositorioCarros;
+import ifpr.pgua.eic.atividade3bim.servicos.AutenticacaoServico;
 import ifpr.pgua.eic.atividade3bim.telas.Home;
 import ifpr.pgua.eic.atividade3bim.utils.FabricaConexoes;
 
@@ -27,16 +30,24 @@ public class App extends Application {
     //CarroDAO carroDAO = new JDBCCarroDAO(fabricaConexoes);
 
     //COMENTAR PARA RESOLVER O EXERCÍCIO
-    CarroDAO carroDAO = new FakeCarroDao();
-    
-    RepositorioCarros repositorio = new RepositorioCarros(carroDAO);
 
+    
+    private static final CarroDAO carroDAO = new FakeCarroDao();
+    private static final AutenticacaoDAO autenticacaoDAO = new FakeAutenticacaoDAO();
+
+
+    private static final RepositorioCarros repositorio = new RepositorioCarros(carroDAO);
+    private static final AutenticacaoServico autenticacaoServico = new AutenticacaoServico(autenticacaoDAO);
+    
+    
 
     @Override
     public void start(Stage stage) throws IOException {
         
-
-        Scene scene = new Scene(loadTela("fxmls/home.fxml", o->new Home(repositorio)), 640, 480);
+        //Scene scene = new Scene(loadTela("fxmls/home.fxml", o->new Home(repositorio,autenticacaoServico)), 640, 480);
+        
+        Scene scene = new Scene(loadTela("fxmls/home.fxml", o->new Home(repositorio, autenticacaoServico)), 640, 480);
+        
         stage.setScene(scene);
         stage.show();
     }
@@ -58,6 +69,7 @@ public class App extends Application {
         }
         return root;   
     }
+ 
 
     public static void main(String[] args) {
         launch();

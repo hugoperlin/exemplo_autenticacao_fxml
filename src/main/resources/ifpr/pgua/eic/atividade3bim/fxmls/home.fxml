@@ -7,7 +7,9 @@
 <BorderPane fx:id="root" prefHeight="800" prefWidth="400"
    xmlns="http://javafx.com/javafx/17" 
    xmlns:fx="http://javafx.com/fxml/1" 
-   fx:controller="ifpr.pgua.eic.atividade3bim.telas.Home">
+   fx:controller="ifpr.pgua.eic.atividade3bim.telas.Home"
+   
+   >
 
    <left>
 
@@ -17,6 +19,8 @@
          </padding>
          <Button onAction="#loadListas" text="Listas" />
          <Button text="Cadastrar Carro" onAction="#loadCadastroCarro"/>
+         <Button text="Logout" onAction="#logout"/>
+         
       </VBox>
    </left>
 
