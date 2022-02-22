@@ -8,7 +8,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 
-public class Login {
+public class Cadastro {
     
 
     @FXML
@@ -27,29 +27,23 @@ public class Login {
     private Home homeControler;
 
 
-    public Login(AutenticacaoServico autenticacaoServico, Home homeControler){
+    public Cadastro(AutenticacaoServico autenticacaoServico, Home homeControler){
         this.autenticacaoServico = autenticacaoServico;
         this.homeControler = homeControler;
 
     }
 
     @FXML
-    public void logar(){
+    public void cadastrar(){
         String usuario = tfUsuario.getText();
         String senha = tfSenha.getText();
         try{
-            autenticacaoServico.logar(usuario, senha);
-            if(autenticacaoServico.estaLogado()){
-                homeControler.atualizaTela();
-            }
+            autenticacaoServico.cadastrar(usuario, senha);
+            homeControler.atualizaTela();
         }catch(Exception e){
 
         }
-    }
-
-    @FXML
-    public void cadastrar(){
-        homeControler.carregaTela("cadastro");
+        
     }
 
 

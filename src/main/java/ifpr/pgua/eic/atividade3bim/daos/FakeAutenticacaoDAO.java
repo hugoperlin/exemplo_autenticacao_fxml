@@ -11,8 +11,11 @@ public class FakeAutenticacaoDAO implements AutenticacaoDAO {
 
     @Override
     public Usuario login(String login, String senha) throws Exception {
+        //Select * from Usuario where login=? and senha=? and ativo=1
         if(login.equals("Teste") && senha.equals("12345")){
-            return new Usuario(1, "Teste");
+            return new Usuario(1, "Teste",false);
+        }else if(login.equals("Admin") && senha.equals("admin")){
+            return new Usuario(2, "Admin", true);
         }
         return null;
     }

@@ -4,6 +4,7 @@ import ifpr.pgua.eic.atividade3bim.App;
 import ifpr.pgua.eic.atividade3bim.repositorios.RepositorioCarros;
 import ifpr.pgua.eic.atividade3bim.servicos.AutenticacaoServico;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 
@@ -17,6 +18,9 @@ public class Home {
 
     @FXML
     private BorderPane root;
+
+    @FXML
+    private Button btCadastrar;
 
 
     public Home(RepositorioCarros repositorio,AutenticacaoServico autenticacaoServico){
@@ -45,7 +49,7 @@ public class Home {
     //Note que o método atualiza é invocado
     //para mostrar novamente o formulário de login.
     @FXML
-    private void logout(){
+    public void logout(){
         autenticacaoServico.logout();
         atualizaTela();
     }
@@ -65,9 +69,37 @@ public class Home {
             painelCentral.getChildren().clear();
             painelCentral.getChildren().add(App.loadTela("fxmls/login.fxml", a->new Login(autenticacaoServico,this)));
         }else{
-            root.getLeft().setVisible(true);
-            painelCentral.getChildren().clear();
+            /*root.getLeft().setVisible(true);
+            if(autenticacaoServico.getLogado().isAdmin()){
+                btCadastrar.setDisable(false);
+            }else{
+                btCadastrar.setDisable(true);
+            }*/
+
+            //criando homes diferentes para cada tipo de usuario
+
+            if(autenticacaoServico.getLogado().isAdmin()){
+                painelCentral.getChildren().clear();
+                painelCentral.getChildren().add(App.loadTela("fxmls/home_admin.fxml", a->new HomeAdmin(this)));
+            
+            }else{
+                painelCentral.getChildren().clear();
+                painelCentral.getChildren().add(App.loadTela("fxmls/home_usuario.fxml", a->new HomeUsuario(this)));
+                
+            }
+
+
+            
         }
 
+    }
+
+    @FXML
+    public void carregaTela(String tela){
+        if(tela.equals("cadastro")){
+            painelCentral.getChildren().clear();
+            painelCentral.getChildren().add(App.loadTela("fxmls/cadastro.fxml", a->new Cadastro(autenticacaoServico, this)));
+        
+        }
     }
 }
